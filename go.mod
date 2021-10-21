@@ -1,4 +1,4 @@
-module github.com/koltyakov/gosip
+module github.com/zhangyangjing/gosip
 
 go 1.13
 
