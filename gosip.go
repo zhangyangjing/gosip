@@ -153,6 +153,13 @@ func (c *SPClient) Execute(req *http.Request) (*http.Response, error) {
 		c.onError(req, reqTime, resp.StatusCode, err)
 	}
 
+	if resp.StatusCode == 429 {
+		retryAfter := resp.Header.Get("Retry-After")
+		if len(retryAfter) > 0 {
+			err = fmt.Errorf("%s :: Retry-After: %s", resp.Status, retryAfter)
+		}
+	}
+
 	c.onResponse(req, reqTime, resp.StatusCode, err)
 	return resp, err
 }
